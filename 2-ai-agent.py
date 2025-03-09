@@ -3,7 +3,7 @@ from phi.model.groq import Groq
 from dotenv import load_dotenv
 from phi.tools.yfinance import YFinanceTools
 from phi.model.azure import AzureOpenAIChat
-
+import os
 load_dotenv()
 
 
@@ -28,9 +28,10 @@ def get_company_symbol(company: str) -> str:
         }
         return symbols.get(company, "Invalid Company")
 
+azure_endpoint = os.getenv("AZURE_OPENAI_ENDPOINT")
 
 agent=Agent(
-    model=AzureOpenAIChat(id="gpt-4",  azure_endpoint="https://myopenai121.openai.azure.com/", azure_deployment="gpt-4"),
+    model=AzureOpenAIChat(id="gpt-4",  azure_endpoint=azure_endpoint, azure_deployment="gpt-4"),
     tools=[YFinanceTools(stock_price=True, analyst_recommendations=True, stock_fundamentals=True), get_company_symbol],
     markdown=True,
     debug_mode=True,

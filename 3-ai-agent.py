@@ -4,6 +4,7 @@ from dotenv import load_dotenv
 from phi.tools.yfinance import YFinanceTools
 from phi.model.azure import AzureOpenAIChat
 from phi.tools.duckduckgo import DuckDuckGo
+import os
 
 load_dotenv()
 
@@ -25,9 +26,11 @@ finance_agent=Agent(
     instructions=["Use tables to display the data"]
 )
 
+azure_endpoint = os.getenv("AZURE_OPENAI_ENDPOINT")
+
 agent_team=Agent(
     name="Team Agent",
-    model=AzureOpenAIChat(id="gpt-4",  azure_endpoint="https://myopenai121.openai.azure.com/", azure_deployment="gpt-4"),
+    model=AzureOpenAIChat(id="gpt-4",  azure_endpoint=azure_endpoint, azure_deployment="gpt-4"),
     markdown=True,
     agents=[web_agent, finance_agent],
     instructions=["Always include sources","Use tables to display the data"]
