@@ -6,9 +6,10 @@ import os
 load_dotenv()
 
 azure_endpoint = os.getenv("AZURE_OPENAI_ENDPOINT")
+azure_deployment=os.getenv("AZURE_OPENAI_API_DEPLOYMENT")
 
 agent=Agent(
-   model=AzureOpenAIChat(id="gpt-4",  azure_endpoint=azure_endpoint, azure_deployment="gpt-4")
+   model=AzureOpenAIChat(id="gpt-4",  azure_endpoint=azure_endpoint, azure_deployment=azure_deployment)
 )
 
-agent.print_response("What is AI Agent?", stream=True)
+agent.print_response("What is SBIN price in Stock today?", stream=True)
